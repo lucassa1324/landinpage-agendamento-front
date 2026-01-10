@@ -78,26 +78,16 @@ export default function RegisterPage() {
       // Limpar formulário
       setFormData({ name: "", businessName: "", email: "", password: "" });
       
-      // Redirecionar para o Dashboard do Cliente (URL com Subdomínio)
+      // Redirecionar para o Dashboard do Cliente
       setTimeout(() => {
-        // Tentativa de capturar o slug de diferentes estruturas possíveis (result.business.slug ou result.slug)
-        const slug = data.business?.slug || data.slug;
+        const baseUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000";
+        const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
         
-        console.log("🔗 Preparando redirecionamento para o slug:", slug);
+        // Redireciona diretamente para /admin conforme solicitado
+        const pathUrl = `${cleanBaseUrl}/admin`;
 
-        if (slug) {
-          // Redirecionamento via Path (Evita problemas de DNS/Conexão com subdomínios em local)
-          // URL: http://localhost:3000/${slug}/admin/dashboard/overview
-          //const pathUrl = `http://localhost:3000/${slug}/admin/dashboard/overview`;
-            const pathUrl = `http://localhost:3000/admin/`;
-          console.log("🚀 Redirecionando para:", pathUrl);
-          window.location.href = pathUrl;
-        } else {
-          // Fallback total caso não venha nenhum identificador
-          const fallbackUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin/dashboard";
-          console.log("⚠️ Slug não encontrado, usando fallback:", fallbackUrl);
-          window.location.href = fallbackUrl;
-        }
+        console.log("🚀 Redirecionando para:", pathUrl);
+        window.location.href = pathUrl;
       }, 1500);
 
     } catch (error) {
