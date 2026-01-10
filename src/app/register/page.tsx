@@ -15,19 +15,41 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    studioName: "",
+    businessName: "", // Usuário prefere chamar de businessName
     email: "",
     password: "",
   });
+
+  const generateSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/--+/g, "-")
+      .trim();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
+    // Preparar o payload para o backend
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      studioName: formData.businessName, // Mapeado para studioName (esperado pelo backend)
+      slug: generateSlug(formData.businessName), // Sugestão de slug
+    };
+
+    console.log("🔍 Verificando dados antes do envio:", payload);
+
     try {
       console.log("🚀 Enviando dados para o backend:", {
         url: `${process.env.NEXT_PUBLIC_API_URL}/users`,
-        data: formData
+        data: payload
       });
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
@@ -35,7 +57,7 @@ export default function RegisterPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       console.log("📡 Resposta do servidor (status):", response.status);
@@ -54,7 +76,7 @@ export default function RegisterPage() {
       });
 
       // Limpar formulário
-      setFormData({ name: "", studioName: "", email: "", password: "" });
+      setFormData({ name: "", businessName: "", email: "", password: "" });
       
       // Redirecionar para o Dashboard do Cliente (URL com Subdomínio)
       setTimeout(() => {
@@ -66,8 +88,8 @@ export default function RegisterPage() {
         if (slug) {
           // Redirecionamento via Path (Evita problemas de DNS/Conexão com subdomínios em local)
           // URL: http://localhost:3000/${slug}/admin/dashboard/overview
-          const pathUrl = `http://localhost:3000/${slug}/admin/dashboard/overview`;
-
+          //const pathUrl = `http://localhost:3000/${slug}/admin/dashboard/overview`;
+            const pathUrl = `http://localhost:3000/admin/`;
           console.log("🚀 Redirecionando para:", pathUrl);
           window.location.href = pathUrl;
         } else {
@@ -116,13 +138,13 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="studioName">Nome do seu estabelecimento</Label>
+              <Label htmlFor="businessName">Nome do seu estabelecimento</Label>
               <Input
-                id="studioName"
+                id="businessName"
                 placeholder="Ex: Studio Art & Beleza"
                 required
-                value={formData.studioName}
-                onChange={(e) => setFormData({ ...formData, studioName: e.target.value })}
+                value={formData.businessName}
+                onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
               />
             </div>
             <div className="space-y-2">
