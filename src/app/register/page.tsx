@@ -167,7 +167,10 @@ export default function RegisterPage() {
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-sm text-center text-muted-foreground">
             Já possui uma conta?{" "}
-            <Link href="#" className="text-primary hover:underline font-medium">
+            <Link 
+              href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000"}/admin`} 
+              className="text-primary hover:underline font-medium"
+            >
               Fazer login
             </Link>
           </div>

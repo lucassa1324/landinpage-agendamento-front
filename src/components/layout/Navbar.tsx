@@ -35,9 +35,16 @@ export function Navbar() {
               {item.name}
             </Link>
           ))}
-          <Button asChild>
-            <Link href="/register">Começar Agora</Link>
-          </Button>
+          <div className="flex items-center gap-3 ml-2">
+            <Button variant="ghost" asChild>
+              <Link href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000"}/admin`}>
+                Entrar
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link href="/register">Começar Agora</Link>
+            </Button>
+          </div>
         </nav>
 
         {/* Mobile Nav */}
@@ -60,6 +67,15 @@ export function Navbar() {
                     {item.name}
                   </Link>
                 ))}
+                <hr className="my-2" />
+                <Button variant="outline" className="w-full" asChild>
+                  <Link 
+                    href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000"}/admin`} 
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Entrar na conta
+                  </Link>
+                </Button>
                 <Button className="w-full" asChild>
                   <Link href="/register" onClick={() => setIsOpen(false)}>
                     Começar Agora
