@@ -35,9 +35,9 @@ export function Navbar() {
               {item.name}
             </Link>
           ))}
-          <div className="flex items-center gap-3 ml-2">
+          <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000"}/admin`}>
+              <Link href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/admin`}>
                 Entrar
               </Link>
             </Button>
@@ -67,20 +67,20 @@ export function Navbar() {
                     {item.name}
                   </Link>
                 ))}
-                <hr className="my-2" />
-                <Button variant="outline" className="w-full" asChild>
-                  <Link 
-                    href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000"}/admin`} 
+                <div className="pt-4 border-t border-border space-y-3">
+                  <Link
+                    href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/admin`}
+                    className="flex items-center text-base font-medium text-muted-foreground hover:text-primary transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     Entrar na conta
                   </Link>
-                </Button>
-                <Button className="w-full" asChild>
-                  <Link href="/register" onClick={() => setIsOpen(false)}>
-                    Começar Agora
-                  </Link>
-                </Button>
+                  <Button asChild className="w-full">
+                    <Link href="/register" onClick={() => setIsOpen(false)}>
+                      Começar Agora
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
