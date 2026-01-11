@@ -37,7 +37,7 @@ export function Navbar() {
           ))}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/admin`}>
+              <Link href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"}>
                 Entrar
               </Link>
             </Button>
@@ -69,7 +69,7 @@ export function Navbar() {
                 ))}
                 <div className="pt-4 border-t border-border space-y-3">
                   <Link
-                    href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/admin`}
+                    href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"}
                     className="flex items-center text-base font-medium text-muted-foreground hover:text-primary transition-colors"
                     onClick={() => setIsOpen(false)}
                   >

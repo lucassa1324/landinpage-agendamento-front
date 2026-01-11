@@ -80,16 +80,8 @@ export default function RegisterPage() {
       
       // Redirecionar para o Dashboard do Cliente
       setTimeout(() => {
-        const baseUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL;
-        if (!baseUrl) {
-          console.error("❌ Erro: NEXT_PUBLIC_DASHBOARD_URL não definida");
-          return;
-        }
-        const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+        const pathUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin";
         
-        // Redireciona diretamente para /admin conforme solicitado
-        const pathUrl = `${cleanBaseUrl}/admin`;
-
         console.log("🚀 Redirecionando para:", pathUrl);
         window.location.href = pathUrl;
       }, 1500);
@@ -172,7 +164,7 @@ export default function RegisterPage() {
           <div className="text-sm text-center text-muted-foreground">
             Já possui uma conta?{" "}
             <Link 
-              href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/admin`} 
+              href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"} 
               className="text-primary hover:underline font-medium"
             >
               Fazer login
