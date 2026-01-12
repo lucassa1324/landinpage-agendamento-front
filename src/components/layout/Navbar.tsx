@@ -5,6 +5,7 @@ import { Menu, Calendar } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ensureAbsoluteUrl } from "@/lib/utils";
 
 const navItems = [
   { name: "Início", href: "#" },
@@ -37,7 +38,7 @@ export function Navbar() {
           ))}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"}>
+              <Link href={ensureAbsoluteUrl(process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin")}>
                 Entrar
               </Link>
             </Button>
@@ -69,7 +70,7 @@ export function Navbar() {
                 ))}
                 <div className="pt-4 border-t border-border space-y-3">
                   <Link
-                    href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"}
+                    href={ensureAbsoluteUrl(process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin")}
                     className="flex items-center text-base font-medium text-muted-foreground hover:text-primary transition-colors"
                     onClick={() => setIsOpen(false)}
                   >

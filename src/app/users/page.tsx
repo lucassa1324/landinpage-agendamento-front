@@ -21,6 +21,7 @@ import { ptBR } from "date-fns/locale";
 import { ArrowLeft, Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ensureAbsoluteUrl } from "@/lib/utils";
 
 interface User {
   id: string;
@@ -43,7 +44,13 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
+      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const apiUrl = ensureAbsoluteUrl(rawApiUrl);
+      const targetUrl = `${apiUrl}/users`;
+
+      console.log("🛠️ Buscando usuários em:", targetUrl);
+      
+      const response = await fetch(targetUrl);
       if (!response.ok) {
         throw new Error("Falha ao carregar usuários");
       }

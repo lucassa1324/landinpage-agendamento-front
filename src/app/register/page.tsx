@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { ensureAbsoluteUrl } from "@/lib/utils";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -47,12 +48,17 @@ export default function RegisterPage() {
     console.log("🔍 Verificando dados antes do envio:", payload);
 
     try {
-      console.log("🚀 Enviando dados para o backend:", {
-        url: `${process.env.NEXT_PUBLIC_API_URL}/users`,
-        data: payload
+      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const apiUrl = ensureAbsoluteUrl(rawApiUrl);
+      const targetUrl = `${apiUrl}/users`;
+
+      console.log("🛠️ Configuração de API:", {
+        raw: rawApiUrl,
+        fixed: apiUrl,
+        final: targetUrl
       });
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+      const response = await fetch(targetUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,10 +86,10 @@ export default function RegisterPage() {
       
       // Redirecionar para o Dashboard do Cliente
       setTimeout(() => {
-        const pathUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin";
+        const dashboardUrl = ensureAbsoluteUrl(process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin");
         
-        console.log("🚀 Redirecionando para:", pathUrl);
-        window.location.href = pathUrl;
+        console.log("🚀 Redirecionando para:", dashboardUrl);
+        window.location.href = dashboardUrl;
       }, 1500);
 
     } catch (error) {
@@ -164,7 +170,7 @@ export default function RegisterPage() {
           <div className="text-sm text-center text-muted-foreground">
             Já possui uma conta?{" "}
             <Link 
-              href={process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"} 
+              href={ensureAbsoluteUrl(process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin")} 
               className="text-primary hover:underline font-medium"
             >
               Fazer login
