@@ -48,14 +48,12 @@ export default function RegisterPage() {
     console.log("🔍 Verificando dados antes do envio:", payload);
 
     try {
-      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const apiUrl = ensureAbsoluteUrl(rawApiUrl);
-      const targetUrl = `${apiUrl}/users`;
+      // Usando caminho relativo para passar pelo Proxy (Next.js rewrites) e evitar CORS
+      const targetUrl = "/api/users";
 
-      console.log("🛠️ Configuração de API:", {
-        raw: rawApiUrl,
-        fixed: apiUrl,
-        final: targetUrl
+      console.log("🛠️ Chamada de API via Proxy:", {
+        target: targetUrl,
+        payload: payload
       });
 
       const response = await fetch(targetUrl, {

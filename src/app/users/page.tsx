@@ -44,11 +44,10 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const apiUrl = ensureAbsoluteUrl(rawApiUrl);
-      const targetUrl = `${apiUrl}/users`;
+      // Usando caminho relativo para passar pelo Proxy (Next.js rewrites) e evitar CORS
+      const targetUrl = "/api/users";
 
-      console.log("🛠️ Buscando usuários em:", targetUrl);
+      console.log("🛠️ Buscando usuários via Proxy em:", targetUrl);
       
       const response = await fetch(targetUrl);
       if (!response.ok) {
