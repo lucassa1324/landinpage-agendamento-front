@@ -16,7 +16,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    businessName: "", // Usuário prefere chamar de businessName
+    companyName: "",
     email: "",
     password: "",
   });
@@ -36,13 +36,14 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
 
-    // Preparar o payload para o backend
+    // Preparar o payload para o backend conforme novas especificações
     const payload = {
       name: formData.name,
       email: formData.email,
       password: formData.password,
-      studioName: formData.businessName, // Mapeado para studioName (esperado pelo backend)
-      slug: generateSlug(formData.businessName), // Sugestão de slug
+      company_name: formData.companyName, // Enviando como company_name conforme solicitado
+      studioName: formData.companyName, // Mantendo studioName para compatibilidade com o backend atual
+      slug: generateSlug(formData.companyName),
     };
 
     console.log("🔍 Verificando dados antes do envio:", payload);
@@ -80,9 +81,9 @@ export default function RegisterPage() {
       });
 
       // Limpar formulário
-      setFormData({ name: "", businessName: "", email: "", password: "" });
+      setFormData({ name: "", companyName: "", email: "", password: "" });
       
-      // Redirecionar para o Dashboard do Cliente
+      // Redirecionar diretamente para a URL definida na variável de ambiente
       setTimeout(() => {
         const dashboardUrl = ensureAbsoluteUrl(process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin");
         
@@ -128,13 +129,13 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="businessName">Nome do seu estabelecimento</Label>
+              <Label htmlFor="companyName">Nome da Empresa</Label>
               <Input
-                id="businessName"
+                id="companyName"
                 placeholder="Ex: Studio Art & Beleza"
                 required
-                value={formData.businessName}
-                onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                value={formData.companyName}
+                onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
               />
             </div>
             <div className="space-y-2">
