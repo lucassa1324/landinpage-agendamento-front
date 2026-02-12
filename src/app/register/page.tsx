@@ -44,6 +44,7 @@ export default function RegisterPage() {
       company_name: formData.companyName, // Enviando como company_name conforme solicitado
       studioName: formData.companyName, // Mantendo studioName para compatibilidade com o backend atual
       slug: generateSlug(formData.companyName),
+      role: "ADMIN", // Definindo "ADMIN" por padrão para cadastros via Landing Page
     };
 
     console.log("🔍 Verificando dados antes do envio:", payload);
