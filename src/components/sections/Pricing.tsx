@@ -2,51 +2,38 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { PRICING_CONFIG } from "@/config/pricing";
 
 const tiers = [
   {
-    name: "Starter",
-    price: "R$ 49",
-    description: "Ideal para profissionais autônomos começando agora.",
+    name: "Teste Grátis",
+    price: PRICING_CONFIG.test.price,
+    description: PRICING_CONFIG.test.description,
     features: [
-      "Até 100 agendamentos/mês",
-      "Agenda Online",
-      "Gestão de Clientes",
-      "Suporte via E-mail",
+      `${PRICING_CONFIG.test.days} dias de acesso total`,
+      "Sem cartão de crédito",
+      "Suporte incluído",
+      "Configuração rápida",
     ],
-    buttonText: "Começar Agora",
+    buttonText: "Começar Teste",
     popular: false,
     href: "/register",
   },
   {
-    name: "Professional",
-    price: "R$ 97",
-    description: "Para studios em crescimento com equipe pequena.",
+    name: "Aura Pro",
+    price: PRICING_CONFIG.pro.price,
+    description: PRICING_CONFIG.pro.description,
     features: [
       "Agendamentos ilimitados",
-      "Até 3 profissionais",
-      "Financeiro Completo",
-      "Lembretes WhatsApp",
+      "Financeiro Simplificado",
       "Suporte Prioritário",
+      "Gestão de Clientes",
+      "Múltiplos Profissionais",
+      "Notificações de Navegador",
     ],
-    buttonText: "Testar Grátis",
+    buttonText: "Assinar Agora",
     popular: true,
     href: "/register",
-  },
-  {
-    name: "Business",
-    price: "R$ 197",
-    description: "Gestão completa para grandes studios e redes.",
-    features: [
-      "Tudo do Professional",
-      "Profissionais ilimitados",
-      "Multi-unidades",
-      "API de Integração",
-      "Gerente de Conta",
-    ],
-    buttonText: "Falar com Consultor",
-    popular: false,
-    href: "#contact",
   },
 ];
 
@@ -55,12 +42,12 @@ export function Pricing() {
     <section id="pricing" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Planos que cabem no seu bolso</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Planos Simples e Transparentes</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Escolha o plano ideal para o momento do seu negócio. Cancele quando quiser.
+            Comece com {PRICING_CONFIG.test.days} dias grátis. Depois, apenas um valor fixo para ter controle total do seu negócio.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {tiers.map((tier) => (
             <Card 
               key={tier.name} 
@@ -68,7 +55,7 @@ export function Pricing() {
             >
               {tier.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold py-1 px-3 rounded-full">
-                  MAIS POPULAR
+                  MELHOR ESCOLHA
                 </div>
               )}
               <CardHeader>

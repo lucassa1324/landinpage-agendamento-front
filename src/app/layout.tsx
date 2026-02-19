@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StudioManager - Gestão e Agendamentos",
+  title: "Aura - Gestão e Agendamentos",
   description: "A plataforma completa para gerenciar seu studio de beleza, tatuagem ou barbearia.",
 };
 

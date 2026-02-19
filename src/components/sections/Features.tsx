@@ -3,8 +3,8 @@ import {
   Users, 
   BarChart3, 
   Smartphone, 
-  Clock, 
-  CreditCard 
+  Bell,
+  Package,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -20,8 +20,8 @@ const features = [
     icon: Users,
   },
   {
-    title: "Financeiro Completo",
-    description: "Controle de entradas, saídas, comissões e fluxo de caixa automatizado.",
+    title: "Financeiro Simplificado",
+    description: "Controle eficiente de entradas e saídas do seu negócio.",
     icon: BarChart3,
   },
   {
@@ -30,14 +30,14 @@ const features = [
     icon: Smartphone,
   },
   {
-    title: "Lembretes Automáticos",
-    description: "Reduza faltas com lembretes automáticos via WhatsApp e E-mail.",
-    icon: Clock,
+    title: "Notificações em Tempo Real",
+    description: "Alertas no navegador sobre novos agendamentos, cancelamentos e estoque baixo.",
+    icon: Bell,
   },
   {
-    title: "Pagamentos Integrados",
-    description: "Receba sinal ou o valor total direto no agendamento via PIX ou Cartão.",
-    icon: CreditCard,
+    title: "Controle de Estoque",
+    description: "Gerencie produtos usados nos serviços e vendas diretas com baixa automática.",
+    icon: Package,
   },
 ];
 

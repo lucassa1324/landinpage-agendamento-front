@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { PRICING_CONFIG } from "@/config/pricing";
 
 export function Hero() {
   return (
@@ -29,7 +30,7 @@ export function Hero() {
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-green-500" />
-            <span>14 dias grátis</span>
+            <span>{PRICING_CONFIG.test.days} dias grátis</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-green-500" />

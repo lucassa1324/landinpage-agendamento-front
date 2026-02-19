@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, Instagram, Facebook, Twitter } from "lucide-react";
+import { Calendar, Instagram, Facebook, Twitter, Phone } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -13,12 +13,20 @@ export function Footer() {
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 font-bold text-xl mb-4">
               <Calendar className="h-6 w-6 text-primary" />
-              <span>StudioManager</span>
+              <span>Aura</span>
             </Link>
-            <p className="text-muted-foreground max-w-sm">
+            <p className="text-muted-foreground max-w-sm mb-4">
               A solução completa para gestão de studios de beleza, tatuagem e barbearias. 
               Simplifique sua rotina e foque no que você faz de melhor.
             </p>
+            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <a href="mailto:lucassa1324@gmail.com" className="hover:text-primary transition-colors">
+                lucassa1324@gmail.com
+              </a>
+              <a href="https://wa.me/5583981448111" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors flex items-center gap-2">
+                <Phone className="h-4 w-4" /> (83) 98144-8111
+              </a>
+            </div>
           </div>
           <div>
             <h4 className="font-bold mb-4">Produto</h4>
@@ -31,6 +39,9 @@ export function Footer() {
           <div>
             <h4 className="font-bold mb-4">Redes Sociais</h4>
             <div className="flex gap-4">
+              <a href="https://wa.me/5583981448111" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
+                <Phone className="h-5 w-5" />
+              </a>
               <Link href="#" className="text-muted-foreground hover:text-primary">
                 <Instagram className="h-5 w-5" />
               </Link>
@@ -44,7 +55,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} StudioManager. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Aura. Todos os direitos reservados.</p>
           <p className="mt-2 text-xs opacity-50">Acessado em: {today}</p>
         </div>
       </div>
