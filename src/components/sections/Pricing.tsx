@@ -1,43 +1,73 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { PRICING_CONFIG } from "@/config/pricing";
-
-const tiers = [
-  {
-    name: "Teste Grátis",
-    price: PRICING_CONFIG.test.price,
-    description: PRICING_CONFIG.test.description,
-    features: [
-      `${PRICING_CONFIG.test.days} dias de acesso total`,
-      "Sem cartão de crédito",
-      "Suporte incluído",
-      "Configuração rápida",
-    ],
-    buttonText: "Começar Teste",
-    popular: false,
-    href: "/register",
-  },
-  {
-    name: "Aura Pro",
-    price: PRICING_CONFIG.pro.price,
-    description: PRICING_CONFIG.pro.description,
-    features: [
-      "Agendamentos ilimitados",
-      "Financeiro Simplificado",
-      "Suporte Prioritário",
-      "Gestão de Clientes",
-      "Múltiplos Profissionais",
-      "Notificações de Navegador",
-    ],
-    buttonText: "Assinar Agora",
-    popular: true,
-    href: "/register",
-  },
-];
+import { useEffect, useState } from "react";
 
 export function Pricing() {
+  const [proPrice, setProPrice] = useState(PRICING_CONFIG.pro.price);
+
+  useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        // Tenta buscar o preço dinâmico do backend
+        // Usamos a URL absoluta do backend já que a landing page está em porta diferente
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+        const response = await fetch(`${apiUrl}/api/business/settings/pricing?t=${Date.now()}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.price) {
+            const formattedPrice = new Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }).format(data.price);
+            setProPrice(formattedPrice);
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao buscar preço dinâmico:", error);
+      }
+    };
+
+    fetchPrice();
+  }, []);
+
+  const tiers = [
+    {
+      name: "Teste Grátis",
+      price: PRICING_CONFIG.test.price,
+      description: PRICING_CONFIG.test.description,
+      features: [
+        `${PRICING_CONFIG.test.days} dias de acesso total`,
+        "Sem cartão de crédito",
+        "Suporte incluído",
+        "Configuração rápida",
+      ],
+      buttonText: "Começar Teste",
+      popular: false,
+      href: "/register",
+    },
+    {
+      name: "Aura Pro",
+      price: proPrice,
+      description: PRICING_CONFIG.pro.description,
+      features: [
+        "Agendamentos ilimitados",
+        "Financeiro Simplificado",
+        "Suporte Prioritário",
+        "Gestão de Clientes",
+        "Múltiplos Profissionais",
+        "Notificações de Navegador",
+      ],
+      buttonText: "Assinar Agora",
+      popular: true,
+      href: "/register",
+    },
+  ];
+
   return (
     <section id="pricing" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
