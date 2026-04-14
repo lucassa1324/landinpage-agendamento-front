@@ -16,7 +16,7 @@ export function Footer() {
               <span>Aura</span>
             </Link>
             <p className="text-muted-foreground max-w-sm mb-4">
-              A solução completa para gestão de studios de beleza, tatuagem e barbearias. 
+              A solução completa para gestão de negócios de beleza, tatuagem e barbearias. 
               Simplifique sua rotina e foque no que você faz de melhor.
             </p>
             <div className="flex flex-col gap-2 text-sm text-muted-foreground">
@@ -31,8 +31,9 @@ export function Footer() {
           <div>
             <h4 className="font-bold mb-4">Produto</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#features">Funcionalidades</Link></li>
-              <li><Link href="#pricing">Preços</Link></li>
+              <li><Link href="/#features">Funcionalidades</Link></li>
+              <li><Link href="/#pricing">Preços</Link></li>
+              <li><Link href="/tutorials">Tutoriais</Link></li>
               <li><Link href="#">Demonstração</Link></li>
             </ul>
           </div>

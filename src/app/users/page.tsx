@@ -68,7 +68,7 @@ export default function UsersPage() {
         <div className="flex items-center justify-between mb-8">
           <Link href="/" className="flex items-center gap-2 font-bold text-2xl">
             <Calendar className="h-8 w-8 text-primary" />
-            <span>StudioManager</span>
+            <span>Aura Manager</span>
           </Link>
           <Button asChild variant="outline">
             <Link href="/register">Novo Usuário</Link>

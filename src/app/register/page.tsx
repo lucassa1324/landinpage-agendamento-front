@@ -149,7 +149,7 @@ export default function RegisterPage() {
               <Label htmlFor="companyName">Nome da Empresa</Label>
               <Input
                 id="companyName"
-                placeholder="Ex: Studio Art & Beleza"
+                placeholder="Ex: Clínica Art & Beleza"
                 required
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}

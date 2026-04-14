@@ -8,10 +8,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ensureAbsoluteUrl } from "@/lib/utils";
 
 const navItems = [
-  { name: "Início", href: "#" },
-  { name: "Funcionalidades", href: "#features" },
-  { name: "Preços", href: "#pricing" },
-  { name: "Contato", href: "#contact" },
+  { name: "Início", href: "/" },
+  { name: "Funcionalidades", href: "/#features" },
+  { name: "Preços", href: "/#pricing" },
+  { name: "Tutoriais", href: "/tutorials" },
+  { name: "Contato", href: "/#contact" },
 ];
 
 export function Navbar() {

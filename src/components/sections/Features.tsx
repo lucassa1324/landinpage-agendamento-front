@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const features = [
   {
     title: "Agendamento Online",
-    description: "Seus clientes agendam 24h por dia pelo link exclusivo do seu studio.",
+    description: "Seus clientes agendam 24h por dia pelo link exclusivo do seu negócio.",
     icon: CalendarDays,
   },
   {
@@ -48,7 +48,7 @@ export function Features() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Tudo o que você precisa para crescer</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Uma plataforma robusta e intuitiva, desenhada especificamente para a rotina de um studio de beleza e arte.
+            Uma plataforma robusta e intuitiva, desenhada especificamente para a rotina de um negócio de beleza e arte.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

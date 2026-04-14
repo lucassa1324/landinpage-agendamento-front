@@ -99,10 +99,10 @@ export function ContactForm() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="studio">Nome do Studio</Label>
+                    <Label htmlFor="studio">Nome do Negócio</Label>
                     <Input 
                       id="studio" 
-                      placeholder="Ex: Studio Art & Beleza" 
+                      placeholder="Ex: Clínica de Estética Aura" 
                       required 
                       value={formData.studio}
                       onChange={(e) => setFormData({ ...formData, studio: e.target.value })}

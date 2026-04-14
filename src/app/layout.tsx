@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Aura - Gestão e Agendamentos",
-  description: "A plataforma completa para gerenciar seu studio de beleza, tatuagem ou barbearia.",
+  description: "A plataforma completa para gerenciar seu negócio de beleza, tatuagem ou barbearia.",
 };
 
 export default function RootLayout({
