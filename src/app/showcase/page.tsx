@@ -11,11 +11,13 @@ import {
   Users,
   ChevronRight,
   Layout,
-  MousePointer2
+  MousePointer2,
+  Maximize2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { heroPresets } from "@/lib/hero-presets";
+import { heroPresets, HeroPreset } from "@/lib/hero-presets";
 import { HeroPreview } from "@/components/showcase/HeroPreview";
+import { HeroModal } from "@/components/showcase/HeroModal";
 
 const sections = [
   { 
@@ -64,6 +66,7 @@ export default function ShowcasePage() {
   const [activeMainSection, setActiveMainSection] = useState(sections[0].id);
   const [activeSubsection, setActiveSubsection] = useState(sections[0].subsections[0].id);
   const [selectedNiche, setSelectedNiche] = useState<string | null>(null);
+  const [previewPreset, setPreviewPreset] = useState<HeroPreset | null>(null);
 
   // Get unique niches
   const uniqueNiches = Array.from(new Set(heroPresets.map(p => p.niche)));
@@ -224,11 +227,26 @@ export default function ShowcasePage() {
             {activeSubsection === "hero" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
                 {filteredPresets.map((preset) => (
-                  <div key={preset.id} className="group relative">
-                    <HeroPreview preset={preset} showFontInfo={true} isCard={true} />
+                  <div 
+                    key={preset.id} 
+                    className="group relative cursor-pointer"
+                    onClick={() => setPreviewPreset(preset)}
+                  >
+                    <div className="relative overflow-hidden rounded-xl border border-border/50 transition-all duration-300 group-hover:shadow-xl group-hover:border-primary/30 group-hover:-translate-y-1">
+                      <HeroPreview preset={preset} showFontInfo={true} isCard={true} />
+                      
+                      {/* Overlay on hover */}
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                        <div className="bg-white text-black px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                          <Maximize2 className="h-4 w-4" />
+                          Ampliar Preview
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="mt-3 flex items-center justify-between px-2">
                       <div>
-                        <h3 className="text-sm font-bold text-foreground">{preset.variationName || "Variação"}</h3>
+                        <h3 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{preset.variationName || "Variação"}</h3>
                         <p className="text-[10px] text-muted-foreground">{preset.niche}</p>
                       </div>
                       <div className="flex items-center gap-2">
@@ -272,6 +290,12 @@ export default function ShowcasePage() {
       </main>
 
       <Footer />
+
+      <HeroModal 
+        preset={previewPreset} 
+        isOpen={!!previewPreset} 
+        onClose={() => setPreviewPreset(null)} 
+      />
     </div>
   );
 }
