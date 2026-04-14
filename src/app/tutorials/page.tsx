@@ -15,17 +15,16 @@ import {
   Clock, 
   ChevronRight,
   Layout,
-  Users,
   Calendar,
   Settings,
-  BarChart3
+  BarChart3,
+  ListChecks,
 } from "lucide-react";
 
 const categories = [
   { name: "Todos", icon: Layout },
   { name: "Início Rápido", icon: PlayCircle },
   { name: "Agenda", icon: Calendar },
-  { name: "Clientes", icon: Users },
   { name: "Financeiro", icon: BarChart3 },
   { name: "Configurações", icon: Settings },
 ];
@@ -35,9 +34,11 @@ const tutorials = [
     id: 1,
     slug: "configurar-primeiro-negocio",
     title: "Como configurar seu primeiro negócio",
-    description: "Aprenda a configurar o nome, horário de funcionamento e serviços básicos do seu negócio.",
+    description: "Um guia passo a passo completo para você tirar sua empresa do papel e começar a agendar. Configuraremos juntos o perfil, horários e seus primeiros serviços.",
     category: "Início Rápido",
     duration: "5 min",
+    difficulty: "Iniciante",
+    steps: 5,
     type: "Artigo",
     image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop",
   },
@@ -45,9 +46,11 @@ const tutorials = [
     id: 2,
     slug: "gestao-agendamentos",
     title: "Gestão de Agendamentos e Redução de Faltas",
-    description: "Domine sua agenda e aprenda estratégias para reduzir o no-show em até 80%.",
+    description: "Domine sua agenda e aprenda estratégias para reduzir o no-show em até 80% usando lembretes automáticos e políticas de cancelamento.",
     category: "Agenda",
-    duration: "8 min",
+    duration: "10 min",
+    difficulty: "Intermediário",
+    steps: 6,
     type: "Artigo",
     image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=800&auto=format&fit=crop",
   },
@@ -55,69 +58,69 @@ const tutorials = [
     id: 3,
     slug: "cadastrar-servicos",
     title: "Como cadastrar seus serviços",
-    description: "Organize seu catálogo de serviços com preços, durações e categorias profissionais.",
+    description: "Organize seu catálogo de serviços com preços, durações e categorias profissionais para facilitar a escolha do cliente.",
     category: "Início Rápido",
-    duration: "6 min",
+    duration: "5 min",
+    difficulty: "Iniciante",
+    steps: 3,
     type: "Artigo",
     image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 4,
-    slug: "gerenciar-clientes",
-    title: "Gestão de Clientes e Prontuários",
-    description: "Mantenha o histórico completo de cada cliente e fidelize seu público com dados estratégicos.",
-    category: "Clientes",
-    duration: "7 min",
-    type: "Artigo",
-    image: "https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=800&auto=format&fit=crop",
+    slug: "gestao-estoque",
+    title: "Gestão de Estoque e Conversão Operacional",
+    description: "Aprenda a cadastrar produtos, configurar unidades de medida e automatizar a baixa de materiais por procedimento.",
+    category: "Configurações",
+    difficulty: "Intermediário",
+    duration: "6 min",
+    steps: 4,
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop"
   },
   {
     id: 5,
     slug: "configurar-horarios",
     title: "Configurando sua Jornada de Trabalho",
-    description: "Defina seus horários de atendimento, folgas e períodos de descanso de forma flexível.",
+    description: "Defina seus horários de atendimento, folgas e períodos de descanso de forma flexível para cada profissional da equipe.",
     category: "Agenda",
     duration: "4 min",
+    difficulty: "Iniciante",
+    steps: 3,
     type: "Artigo",
     image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?q=80&w=800&auto=format&fit=crop",
   },
   {
+    id: 6,
+    slug: "conceitos-financeiro",
+    title: "Inteligência Financeira: Do Fluxo ao Lucro Real",
+    description: "Domine seu fluxo de caixa e entenda o lucro real do seu negócio com dados estratégicos e relatórios automáticos.",
+    category: "Financeiro",
+    difficulty: "Avançado",
+    duration: "12 min",
+    steps: 5,
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop"
+  },
+  {
     id: 7,
     slug: "tutorial-editor",
-    title: "Editor de Site: Otimizando para Conversão",
-    description: "Transforme sua página de agendamento em uma máquina de vendas com técnicas de design.",
+    title: "Editor de Site: Domine a vitrine do seu negócio",
+    description: "Aprenda a navegar, remover seções, gerenciar páginas e personalizar cada detalhe do seu site de agendamento profissional.",
     category: "Configurações",
-    duration: "10 min",
+    duration: "8 min",
+    difficulty: "Intermediário",
+    steps: 5,
     type: "Artigo",
-    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 8,
-    slug: "gestao-estoque",
-    title: "Gestão de Estoque e Conversão Operacional",
-    description: "Vá além da contagem: aprenda como o estoque impacta diretamente na sua lucratividade.",
-    category: "Configurações",
-    duration: "12 min",
-    type: "Artigo",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: 9,
-    slug: "conceitos-financeiro",
-    title: "Inteligência Financeira: Do Fluxo ao Lucro Real",
-    description: "Domine seu fluxo de caixa e entenda o lucro real do seu negócio com dados estratégicos.",
-    category: "Financeiro",
-    duration: "15 min",
-    type: "Artigo",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: 10,
     slug: "notificacoes-automaticas",
     title: "Configurando notificações automáticas",
-    description: "Ative alertas de navegador para nunca mais perder um novo agendamento.",
+    description: "Ative alertas de navegador e WhatsApp para nunca mais perder um novo agendamento e reduzir o tempo de resposta.",
     category: "Agenda",
     duration: "3 min",
+    difficulty: "Iniciante",
+    steps: 2,
     type: "Artigo",
     image: "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=800&auto=format&fit=crop",
   },
@@ -182,7 +185,7 @@ export default function TutorialsPage() {
           {filteredTutorials.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredTutorials.map((tutorial) => (
-                <Card key={tutorial.id} className="group overflow-hidden border-primary/10 hover:border-primary/30 transition-all hover:shadow-lg flex flex-col">
+                <Card key={tutorial.slug} className="group overflow-hidden border-primary/10 hover:border-primary/30 transition-all hover:shadow-lg flex flex-col">
                   <Link href={`/tutorials/${tutorial.slug}`} className="flex flex-col h-full">
                     <div className="relative aspect-video overflow-hidden">
                       <img 
@@ -198,26 +201,44 @@ export default function TutorialsPage() {
                       </div>
                     </div>
                     <CardHeader className="grow">
-                      <div className="flex items-center gap-2 text-xs text-primary font-medium mb-2">
+                      <div className="flex flex-wrap items-center gap-2 text-xs font-medium mb-3">
                         <Badge variant="outline" className="text-[10px] uppercase tracking-wider font-bold">
                           {tutorial.category}
                         </Badge>
-                        <span className="flex items-center gap-1 text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          {tutorial.duration}
-                        </span>
+                        <Badge variant="outline" className={`text-[10px] uppercase tracking-wider font-bold ${
+                          tutorial.difficulty === 'Iniciante' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                          tutorial.difficulty === 'Intermediário' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                          'bg-rose-50 text-rose-700 border-rose-200'
+                        }`}>
+                          {tutorial.difficulty}
+                        </Badge>
                       </div>
-                      <CardTitle className="group-hover:text-primary transition-colors line-clamp-2">
+                      <CardTitle className="group-hover:text-primary transition-colors line-clamp-2 mb-2">
                         {tutorial.title}
                       </CardTitle>
-                      <CardDescription className="line-clamp-3">
+                      <CardDescription className="line-clamp-3 mb-4 text-sm leading-relaxed">
                         {tutorial.description}
                       </CardDescription>
+                      
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground mt-auto pt-2 border-t border-border/50">
+                        <span className="flex items-center gap-1.5">
+                          <Clock className="h-3.5 w-3.5" />
+                          {tutorial.duration}
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <ListChecks className="h-3.5 w-3.5" />
+                          {tutorial.steps} passos
+                        </span>
+                      </div>
                     </CardHeader>
                     <CardContent className="pt-0">
-                      <div className="flex w-full justify-between items-center group/btn hover:bg-primary/5 h-auto py-2 transition-colors">
-                        <span className="text-sm font-semibold">Começar Tutorial</span>
-                        <ChevronRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                      <div className="flex w-full justify-between items-center group/btn py-3 px-1 rounded-lg transition-all duration-300">
+                        <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
+                          Acessar Tutorial Completo
+                        </span>
+                        <div className="bg-primary/10 p-1 rounded-full group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                          <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
                       </div>
                     </CardContent>
                   </Link>
