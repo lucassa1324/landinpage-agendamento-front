@@ -74,6 +74,7 @@ export default function ShowcasePage() {
   const filteredPresets = selectedNiche 
     ? heroPresets.filter(p => p.niche === selectedNiche)
     : heroPresets;
+  const showcasePresets = filteredPresets.slice(0, selectedNiche ? 6 : 12);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -219,6 +220,10 @@ export default function ShowcasePage() {
               </p>
             </div>
           </div>
+          <p className="text-xs text-muted-foreground mt-3">
+            Mostrando {showcasePresets.length} de {filteredPresets.length} templates para vitrine.
+          </p>
+
 
           <div className={cn(
             "flex-1",
@@ -226,7 +231,7 @@ export default function ShowcasePage() {
           )}>
             {activeSubsection === "hero" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
-                {filteredPresets.map((preset) => (
+                {showcasePresets.map((preset) => (
                   <div 
                     key={preset.id} 
                     className="group relative cursor-pointer"
