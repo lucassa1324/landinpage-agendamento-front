@@ -15,7 +15,6 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
-    cpfCnpj: "",
     email: "",
     phone: "",
     password: "",
@@ -42,7 +41,6 @@ export default function RegisterPage() {
       email: formData.email,
       password: formData.password,
       phone: formData.phone.replace(/\D/g, ""),
-      cpfCnpj: formData.cpfCnpj.replace(/\D/g, ""),
       company_name: formData.companyName, // Enviando como company_name conforme solicitado
       studioName: formData.companyName, // Mantendo studioName para compatibilidade com o backend atual
       slug: generateSlug(formData.companyName),
@@ -98,7 +96,13 @@ export default function RegisterPage() {
       });
 
       // Limpar formulário
-      setFormData({ name: "", companyName: "", cpfCnpj: "", email: "", phone: "", password: "" });
+      setFormData({
+        name: "",
+        companyName: "",
+        email: "",
+        phone: "",
+        password: "",
+      });
       
       // Redirecionar diretamente para a URL definida na variável de ambiente
       setTimeout(() => {
@@ -153,16 +157,6 @@ export default function RegisterPage() {
                 required
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="cpfCnpj">CPF</Label>
-              <Input
-                id="cpfCnpj"
-                placeholder="Somente números"
-                required
-                value={formData.cpfCnpj}
-                onChange={(e) => setFormData({ ...formData, cpfCnpj: e.target.value })}
               />
             </div>
             <div className="space-y-2">
