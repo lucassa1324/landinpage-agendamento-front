@@ -235,7 +235,7 @@ export default function TutorialContent({ params }: { params: Promise<{ slug: st
   return (
     <main className="min-h-screen bg-background">
       {/* Header Fixo */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/tutorials">
@@ -244,7 +244,7 @@ export default function TutorialContent({ params }: { params: Promise<{ slug: st
               </Button>
             </Link>
             <div className="hidden sm:block">
-              <h1 className="text-sm font-semibold truncate max-w-[200px] lg:max-w-md">
+              <h1 className="text-sm font-semibold truncate max-w-50 lg:max-w-md">
                 {tutorial.title}
               </h1>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -389,7 +389,7 @@ export default function TutorialContent({ params }: { params: Promise<{ slug: st
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20">
+                <div className="bg-linear-to-br from-primary/10 to-primary/5 rounded-2xl p-6 border border-primary/20">
                   <h4 className="font-bold mb-2">Pronto para começar?</h4>
                   <p className="text-sm text-muted-foreground mb-4">
                     Coloque em prática o que aprendeu e transforme seu negócio hoje mesmo.
