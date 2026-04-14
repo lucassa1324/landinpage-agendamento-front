@@ -4,220 +4,271 @@ import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "../../components/ui/badge";
 import { 
-  Layout, 
+  Sparkles, 
+  Image as ImageIcon, 
   Calendar, 
-  User, 
-  Star, 
-  CreditCard, 
-  Columns,
-  Eye,
-  ArrowRight,
-  ExternalLink,
-  Sparkles
+  Users,
+  ChevronRight,
+  Layout,
+  MousePointer2
 } from "lucide-react";
-import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { heroPresets } from "@/lib/hero-presets";
+import { HeroPreview } from "@/components/showcase/HeroPreview";
 
-const categories = [
-  { name: "Todos", icon: Layout },
-  { name: "Hero", icon: Sparkles },
-  { name: "Agendamento", icon: Calendar },
-  { name: "Serviços", icon: Columns },
-  { name: "Depoimentos", icon: Star },
-  { name: "Preços", icon: CreditCard },
-];
-
-const showcases = [
-  {
-    id: 1,
-    title: "Hero - Estilo Moderno Dark",
-    description: "Uma seção de impacto com fundo escuro, gradientes e CTA em destaque. Ideal para barbearias e estúdios premium.",
-    category: "Hero",
-    image: "/tutorials/print-site.png",
-    difficulty: "Fácil",
-    tags: ["Dark Mode", "Gradient", "Premium"],
+const sections = [
+  { 
+    id: "home", 
+    name: "Início", 
+    icon: Sparkles,
+    subsections: [
+      { id: "hero", name: "Hero (Banner Principal)" },
+      { id: "services", name: "Serviços" },
+      { id: "values", name: "Diferenciais" },
+      { id: "gallery-preview", name: "Preview Galeria" },
+      { id: "cta", name: "Chamada (CTA)" },
+    ]
   },
-  {
-    id: 2,
-    title: "Agendamento - Minimalista",
-    description: "Interface de agendamento limpa, focada na conversão e facilidade de uso para o cliente final.",
-    category: "Agendamento",
-    image: "/tutorials/print-agenda.png",
-    difficulty: "Média",
-    tags: ["Clean", "Focus", "Fast"],
+  { 
+    id: "gallery", 
+    name: "Galeria", 
+    icon: ImageIcon,
+    subsections: [
+      { id: "gallery-grid", name: "Grade de Fotos" },
+    ]
   },
-  {
-    id: 3,
-    title: "Serviços - Grade de Cards",
-    description: "Exibição de serviços em grade com fotos, preços e tempos de duração bem definidos.",
-    category: "Serviços",
-    image: "/tutorials/print-servico-registro.png",
-    difficulty: "Fácil",
-    tags: ["Grid", "Visual", "Info"],
+  { 
+    id: "booking", 
+    name: "Agendar", 
+    icon: Calendar,
+    subsections: [
+      { id: "booking-flow", name: "Fluxo de Agendamento" },
+    ]
   },
-  {
-    id: 4,
-    title: "Depoimentos - Carrossel",
-    description: "Prova social elegante para passar confiança aos seus clientes através de feedbacks reais.",
-    category: "Depoimentos",
-    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=800&auto=format&fit=crop",
-    difficulty: "Média",
-    tags: ["Social Proof", "Carousel"],
-  },
-  {
-    id: 5,
-    title: "Preços - Tabela Comparativa",
-    description: "Destaque seus planos e pacotes de forma clara, ajudando o cliente a escolher a melhor opção.",
-    category: "Preços",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop",
-    difficulty: "Fácil",
-    tags: ["Pricing", "Conversion"],
-  },
-  {
-    id: 6,
-    title: "Hero - Estilo Corporativo",
-    description: "Design sóbrio e profissional para clínicas e consultórios que buscam autoridade.",
-    category: "Hero",
-    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop",
-    difficulty: "Fácil",
-    tags: ["Corporate", "Professional"],
+  { 
+    id: "about", 
+    name: "Sobre Nós", 
+    icon: Users,
+    subsections: [
+      { id: "about-hero", name: "Hero Sobre" },
+      { id: "story", name: "Nossa História" },
+      { id: "about-values", name: "Nossos Valores" },
+      { id: "team", name: "Equipe" },
+      { id: "testimonials", name: "Depoimentos" },
+    ]
   },
 ];
 
 export default function ShowcasePage() {
-  const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [activeMainSection, setActiveMainSection] = useState(sections[0].id);
+  const [activeSubsection, setActiveSubsection] = useState(sections[0].subsections[0].id);
+  const [selectedNiche, setSelectedNiche] = useState<string | null>(null);
 
-  const filteredShowcases = showcases.filter((item) => {
-    return selectedCategory === "Todos" || item.category === selectedCategory;
-  });
+  // Get unique niches
+  const uniqueNiches = Array.from(new Set(heroPresets.map(p => p.niche)));
+  
+  const filteredPresets = selectedNiche 
+    ? heroPresets.filter(p => p.niche === selectedNiche)
+    : heroPresets;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
-      <main className="grow pt-32 pb-24">
-        {/* Header Section */}
-        <section className="container mx-auto px-4 mb-16 text-center">
-          <Badge variant="outline" className="mb-4 py-1 px-4 text-primary border-primary/20">
-            Inspiração & Design
-          </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
-            Showcase de Exemplos
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
-            Explore diferentes variações e estilos de seções para o seu site. Veja como a Aura Pro pode transformar a sua vitrine online.
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" asChild className="rounded-full gap-2 px-8">
-              <Link href="http://localhost:3000/admin">
-                <Sparkles className="h-5 w-5" />
-                Ver no Editor
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild className="rounded-full gap-2 px-8">
-              <Link href="https://wa.me/5583981448111" target="_blank">
-                Falar com Consultor
-              </Link>
-            </Button>
-          </div>
-        </section>
+      <main className="flex-1 pt-24 pb-12 flex flex-col lg:flex-row container mx-auto gap-8">
+        {/* Navigation Menu */}
+        <aside className="w-full lg:w-80 shrink-0 px-4 lg:px-0">
+          <div className="sticky top-24 space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4 px-4">
+                Seções do Site Base
+              </h2>
+              <nav className="space-y-4">
+                {sections.map((section) => {
+                  const Icon = section.icon;
+                  const isMainActive = activeMainSection === section.id;
+                  
+                  return (
+                    <div key={section.id} className="space-y-1">
+                      <Button
+                        variant={isMainActive ? "secondary" : "ghost"}
+                        className={cn(
+                          "w-full justify-start gap-3 h-11 px-4 transition-all rounded-lg",
+                          isMainActive 
+                            ? "bg-primary/10 text-primary font-bold shadow-sm" 
+                            : "hover:bg-primary/5 hover:text-primary"
+                        )}
+                        onClick={() => {
+                          setActiveMainSection(section.id);
+                          setActiveSubsection(section.subsections[0].id);
+                        }}
+                      >
+                        <Icon className={cn("h-5 w-5", isMainActive ? "text-primary" : "text-muted-foreground")} />
+                        <span className="flex-1 text-left">{section.name}</span>
+                      </Button>
 
-        {/* Categories Section */}
-        <section className="container mx-auto px-4 mb-12">
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((cat) => {
-              const Icon = cat.icon;
-              return (
-                <Button
-                  key={cat.name}
-                  variant={selectedCategory === cat.name ? "default" : "outline"}
-                  className="rounded-full gap-2 px-6"
-                  onClick={() => setSelectedCategory(cat.name)}
-                >
-                  <Icon className="h-4 w-4" />
-                  {cat.name}
-                </Button>
-              );
-            })}
-          </div>
-        </section>
+                      {/* Subsections */}
+                      {isMainActive && (
+                        <div className="ml-9 flex flex-col border-l-2 border-primary/20 pl-2 space-y-1 mt-1 animate-in slide-in-from-left-2 duration-200">
+                          {section.subsections.map((sub) => (
+                            <button
+                              key={sub.id}
+                              onClick={() => setActiveSubsection(sub.id)}
+                              className={cn(
+                                "text-sm py-2 px-3 rounded-md text-left transition-colors",
+                                activeSubsection === sub.id
+                                  ? "bg-primary text-primary-foreground font-medium shadow-sm"
+                                  : "text-muted-foreground hover:bg-primary/5 hover:text-primary"
+                              )}
+                            >
+                              {sub.name}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </nav>
+            </div>
 
-        {/* Showcase Grid */}
-        <section className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredShowcases.map((item) => (
-              <Card key={item.id} className="group overflow-hidden border-primary/10 hover:border-primary/30 transition-all hover:shadow-xl flex flex-col">
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                    <Button variant="secondary" size="sm" className="gap-2">
-                      <Eye className="h-4 w-4" />
-                      Visualizar
-                    </Button>
-                    <Button variant="default" size="sm" className="gap-2">
-                      <ExternalLink className="h-4 w-4" />
-                      Usar Modelo
-                    </Button>
-                  </div>
-                  <div className="absolute top-3 left-3">
-                    <Badge className="bg-primary/90 backdrop-blur-sm">
-                      {item.category}
-                    </Badge>
-                  </div>
+            {/* Niche Selector */}
+            {activeSubsection === "hero" && (
+              <div className="pt-6 border-t border-border space-y-4">
+                <div className="flex items-center gap-2 px-4 mb-2">
+                  <Layout className="h-4 w-4 text-primary" />
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                    Selecione o Nicho
+                  </h3>
                 </div>
-                
-                <CardHeader className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                      {item.title}
-                    </CardTitle>
-                  </div>
-                  <CardDescription className="line-clamp-2 text-sm leading-relaxed">
-                    {item.description}
-                  </CardDescription>
-                </CardHeader>
+                <div className="grid grid-cols-1 gap-1 max-h-100 overflow-y-auto pr-2 custom-scrollbar">
+                  <button
+                    onClick={() => setSelectedNiche(null)}
+                    className={cn(
+                      "text-left px-4 py-2.5 rounded-lg text-sm transition-all flex items-center gap-3",
+                      selectedNiche === null
+                        ? "bg-primary/10 text-primary font-bold border border-primary/20"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground border border-transparent"
+                    )}
+                  >
+                    <div className={cn(
+                      "h-2 w-2 rounded-full",
+                      selectedNiche === null ? "bg-primary animate-pulse" : "bg-muted-foreground/30"
+                    )} />
+                    Exibir Todos
+                  </button>
 
-                <CardContent className="px-6 pb-6 pt-0 mt-auto">
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.map(tag => (
-                      <span key={tag} className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground bg-muted px-2 py-0.5 rounded">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  {uniqueNiches.map((niche) => {
+                    const isActive = selectedNiche === niche;
+                    
+                    return (
+                      <button
+                        key={niche}
+                        onClick={() => setSelectedNiche(niche)}
+                        className={cn(
+                          "text-left px-4 py-2.5 rounded-lg text-sm transition-all flex items-center gap-3",
+                          isActive
+                            ? "bg-primary/10 text-primary font-bold border border-primary/20"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground border border-transparent"
+                        )}
+                      >
+                        <div className={cn(
+                          "h-2 w-2 rounded-full",
+                          isActive ? "bg-primary animate-pulse" : "bg-muted-foreground/30"
+                        )} />
+                        {niche}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
-        </section>
+        </aside>
 
-        {/* Call to Action */}
-        <section className="container mx-auto px-4 mt-24">
-          <div className="bg-primary/5 rounded-3xl p-12 border border-primary/10 text-center relative overflow-hidden">
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
+        {/* Content Area */}
+        <div className="flex-1 flex flex-col gap-6 px-4 lg:px-0">
+          <div className="bg-muted/30 rounded-2xl p-6 border border-border/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs font-bold text-primary uppercase tracking-wider">Visualizando Exemplo</span>
+                <span className="text-muted-foreground">•</span>
+                <span className="text-xs font-medium text-muted-foreground">Página {sections.find(s => s.id === activeMainSection)?.name}</span>
+              </div>
+              <h2 className="text-2xl font-bold">
+                {sections.find(s => s.id === activeMainSection)?.subsections.find(sub => sub.id === activeSubsection)?.name}
+              </h2>
+            </div>
             
-            <h2 className="text-3xl font-bold mb-4">Gostou desses exemplos?</h2>
-            <p className="text-muted-foreground mb-8 max-w-xl mx-auto text-lg">
-              Comece agora mesmo a criar o seu site com a Aura Pro e tenha acesso a todos esses modelos e muito mais.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" asChild className="rounded-full gap-2 px-10 group">
-                <Link href="/register">
-                  Começar Agora
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
+            {/* Variation Toggle Removed since we show all in grid */}
+            
+            <div className="flex items-center gap-3">
+              <div className="flex -space-x-2">
+                {[1,2,3].map(i => (
+                  <div key={i} className="h-8 w-8 rounded-full border-2 border-background bg-muted flex items-center justify-center">
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground font-medium">
+                {heroPresets.length}+ variações disponíveis
+              </p>
             </div>
           </div>
-        </section>
+
+          <div className={cn(
+            "flex-1",
+            activeSubsection === "hero" ? "" : "bg-card rounded-2xl border border-border/50 shadow-xl overflow-hidden min-h-150 relative group"
+          )}>
+            {activeSubsection === "hero" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
+                {filteredPresets.map((preset) => (
+                  <div key={preset.id} className="group relative">
+                    <HeroPreview preset={preset} showFontInfo={true} isCard={true} />
+                    <div className="mt-3 flex items-center justify-between px-2">
+                      <div>
+                        <h3 className="text-sm font-bold text-foreground">{preset.variationName || "Variação"}</h3>
+                        <p className="text-[10px] text-muted-foreground">{preset.niche}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-medium bg-muted px-2 py-0.5 rounded text-muted-foreground uppercase tracking-tighter">
+                          {preset.fontFamily}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="h-full w-full flex flex-col items-center justify-center p-12 text-center text-muted-foreground">
+                <div className="h-20 w-20 rounded-full bg-primary/5 flex items-center justify-center mb-6">
+                  <MousePointer2 className="h-10 w-10 text-primary/40" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-2">Seção em Desenvolvimento</h3>
+                <p className="max-w-md">
+                  Estamos preparando exemplos incríveis para a seção de <span className="text-primary font-semibold">{sections.find(s => s.id === activeMainSection)?.subsections.find(sub => sub.id === activeSubsection)?.name}</span>.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="mt-8 gap-2"
+                  onClick={() => setActiveSubsection("hero")}
+                >
+                  <Sparkles className="h-4 w-4" />
+                  Ver Exemplos de Hero
+                </Button>
+              </div>
+            )}
+            
+            {/* Overlay Info */}
+            <div className="absolute bottom-6 right-6 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="bg-black/80 backdrop-blur-md text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 border border-white/10 shadow-2xl">
+                <div className="h-2 w-2 rounded-full bg-green-500" />
+                DADOS REAIS DO COMPONENTE
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
 
       <Footer />
