@@ -34,6 +34,7 @@ export function Footer() {
               <li><Link href="/#features">Funcionalidades</Link></li>
               <li><Link href="/#pricing">Preços</Link></li>
               <li><Link href="/tutorials">Tutoriais</Link></li>
+              <li><Link href="/showcase">Exemplos</Link></li>
               <li><Link href="#">Demonstração</Link></li>
             </ul>
           </div>

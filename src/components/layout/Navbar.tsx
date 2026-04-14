@@ -12,6 +12,7 @@ const navItems = [
   { name: "Funcionalidades", href: "/#features" },
   { name: "Preços", href: "/#pricing" },
   { name: "Tutoriais", href: "/tutorials" },
+  { name: "Exemplos", href: "/showcase" },
   { name: "Contato", href: "/#contact" },
 ];
 
