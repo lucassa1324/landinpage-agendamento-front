@@ -39,6 +39,13 @@ export function Footer() {
             </ul>
           </div>
           <div>
+            <h4 className="font-bold mb-4">Legal</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li><Link href="/termos-de-uso">Termos de Uso</Link></li>
+              <li><Link href="/politica-de-privacidade">Política de Privacidade</Link></li>
+            </ul>
+          </div>
+          <div>
             <h4 className="font-bold mb-4">Redes Sociais</h4>
             <div className="flex gap-4">
               <a href="https://wa.me/5583981448111" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
