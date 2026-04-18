@@ -2,18 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { Sparkles, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { toast } from "sonner";
 import { ensureAbsoluteUrl } from "@/lib/utils";
 
@@ -51,32 +43,21 @@ export default function RegisterPage() {
 
     setLoading(true);
 
-    // Preparar o payload para o backend conforme novas especificações
     const payload = {
       name: formData.name,
       email: formData.email,
       password: formData.password,
       phone: formData.phone.replace(/\D/g, ""),
-      company_name: formData.companyName, // Enviando como company_name conforme solicitado
-      studioName: formData.companyName, // Mantendo studioName para compatibilidade com o backend atual
+      company_name: formData.companyName,
+      studioName: formData.companyName,
       slug: generateSlug(formData.companyName),
-      role: "ADMIN", // Definindo "ADMIN" por padrão para cadastros via Landing Page
+      role: "ADMIN",
       acceptedTerms: true,
       acceptedTermsAt: new Date().toISOString(),
     };
 
-    console.log("🔍 Verificando dados antes do envio:", payload);
-
     try {
-      // Usando caminho relativo para passar pelo Proxy (Next.js rewrites) e evitar CORS
-      // Adicionando barra final para garantir match com o prefixo /users no Elysia
       const targetUrl = "/api/users/";
-
-      console.log("🛠️ Chamada de API via Proxy:", {
-        target: targetUrl,
-        payload: payload,
-      });
-
       const response = await fetch(targetUrl, {
         method: "POST",
         headers: {
@@ -85,63 +66,31 @@ export default function RegisterPage() {
         body: JSON.stringify(payload),
       });
 
-      console.log("📡 Resposta do servidor (status):", response.status);
-
       if (!response.ok) {
         const responseText = await response.text();
-        console.error("❌ Resposta bruta do erro:", responseText);
-
         let errorData;
         try {
           errorData = JSON.parse(responseText);
         } catch (e) {
           errorData = {
-            message: responseText || "Erro desconhecido (não-JSON)",
+            message: responseText || "Erro desconhecido",
           };
         }
-
-        console.error("❌ Detalhes estruturados do erro:", {
-          status: response.status,
-          statusText: response.statusText,
-          data: errorData,
-        });
-        throw new Error(
-          errorData.message ||
-            errorData.error ||
-            `Erro ${response.status}: ao criar conta`
-        );
+        throw new Error(errorData.message || "Erro ao realizar cadastro.");
       }
 
-      const data = await response.json().catch(() => ({}));
-      console.log("✅ Dados recebidos com sucesso:", data);
-
       toast.success("Conta criada com sucesso!", {
-        description: "Você será redirecionado para o seu dashboard.",
+        description: "Você será redirecionado para o painel de controle.",
       });
 
-      // Limpar formulário
-      setFormData({
-        name: "",
-        companyName: "",
-        email: "",
-        phone: "",
-        password: "",
-        acceptedTerms: false,
-      });
-
-      // Redirecionar diretamente para a URL definida na variável de ambiente
       setTimeout(() => {
-        const dashboardUrl = ensureAbsoluteUrl(
+        window.location.href = ensureAbsoluteUrl(
           process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"
         );
-
-        console.log("🚀 Redirecionando para:", dashboardUrl);
-        window.location.href = dashboardUrl;
-      }, 1500);
-    } catch (error) {
-      toast.error("Erro no cadastro", {
-        description:
-          error instanceof Error ? error.message : "Ocorreu um erro inesperado",
+      }, 2000);
+    } catch (error: any) {
+      toast.error("Ocorreu um erro no cadastro", {
+        description: error.message || "Tente novamente em alguns minutos.",
       });
     } finally {
       setLoading(false);
@@ -149,31 +98,86 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="bg-muted/30 flex min-h-screen flex-col items-center justify-center p-4">
-      <div className="mb-8">
-        <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
-          <Calendar className="text-primary h-8 w-8" />
-          <span>StudioManager</span>
+    <main className="min-h-screen bg-background relative overflow-hidden flex flex-col lg:flex-row">
+      {/* Decorative background */}
+      <div className="absolute top-0 right-0 -z-10 w-1/2 h-full bg-linear-to-l from-primary/5 to-transparent blur-3xl opacity-50" />
+      
+      {/* Left side - Brand/Empowerment */}
+      <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-muted/30 border-r border-border/50 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-primary/5 blur-3xl rounded-full" />
+        
+        <Link href="/" className="flex items-center gap-2 font-bold text-3xl tracking-tighter relative z-10 group transition-all">
+          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
+            <Sparkles className="h-6 w-6 fill-current" />
+          </div>
+          <span className="text-foreground">Aura</span>
         </Link>
+
+        <div className="relative z-10 space-y-8 max-w-lg">
+          <h1 className="text-5xl font-bold tracking-tight leading-[1.1]">
+            Comece hoje sua jornada de <span className="text-primary italic">sucesso</span> e empoderamento.
+          </h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            Junte-se a milhares de especialistas que transformaram a gestão de seus estúdios com a Aura. 
+            Elegância, simplicidade e controle na palma da sua mão.
+          </p>
+          
+          <div className="space-y-6 pt-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center">
+                <CheckCircle2 className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="font-bold text-lg">Teste Grátis por 7 dias</p>
+                <p className="text-muted-foreground">Experimente todas as funcionalidades premium.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center">
+                <CheckCircle2 className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="font-bold text-lg">Configuração em 2 minutos</p>
+                <p className="text-muted-foreground">Interface intuitiva para você começar agora.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 text-sm text-muted-foreground font-medium italic">
+          &quot;Onde a beleza encontra a tecnologia.&quot;
+        </div>
       </div>
 
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-2xl font-bold">
-            Criar sua conta
-          </CardTitle>
-          <CardDescription className="text-center">
-            Comece seus 14 dias de teste grátis hoje mesmo.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Right side - Form */}
+      <div className="flex-1 flex flex-col justify-center items-center p-6 sm:p-12 lg:p-24 overflow-y-auto">
+        <div className="w-full max-w-md space-y-8">
+          <div className="lg:hidden text-center mb-12">
+            <Link href="/" className="inline-flex items-center gap-2 font-bold text-3xl tracking-tighter">
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg">
+                <Sparkles className="h-6 w-6 fill-current" />
+              </div>
+              <span className="text-foreground">Aura</span>
+            </Link>
+          </div>
+
+          <div className="space-y-2 text-center lg:text-left">
+            <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline mb-4 group">
+              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              Voltar para o início
+            </Link>
+            <h2 className="text-3xl font-bold tracking-tight">Crie sua conta</h2>
+            <p className="text-muted-foreground text-lg">Comece seu teste gratuito agora mesmo.</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Nome Completo</Label>
+              <Label htmlFor="name" className="text-sm font-bold ml-1">Seu Nome Completo</Label>
               <Input
                 id="name"
-                placeholder="Seu nome"
+                placeholder="Ex: Maria Silva"
                 required
+                className="h-14 rounded-2xl bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-primary text-base"
                 value={formData.name}
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
@@ -181,11 +185,12 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyName">Nome da Empresa</Label>
+              <Label htmlFor="companyName" className="text-sm font-bold ml-1">Nome do seu Estúdio/Negócio</Label>
               <Input
                 id="companyName"
-                placeholder="Ex: Clínica Art & Beleza"
+                placeholder="Ex: Studio Aura"
                 required
+                className="h-14 rounded-2xl bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-primary text-base"
                 value={formData.companyName}
                 onChange={(e) =>
                   setFormData({ ...formData, companyName: e.target.value })
@@ -193,12 +198,13 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
+              <Label htmlFor="email" className="text-sm font-bold ml-1">E-mail</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="seu@email.com"
                 required
+                className="h-14 rounded-2xl bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-primary text-base"
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -206,11 +212,12 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Telefone / WhatsApp</Label>
+              <Label htmlFor="phone" className="text-sm font-bold ml-1">Telefone / WhatsApp</Label>
               <Input
                 id="phone"
                 placeholder="(99) 99999-9999"
                 required
+                className="h-14 rounded-2xl bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-primary text-base"
                 value={formData.phone}
                 onChange={(e) =>
                   setFormData({ ...formData, phone: e.target.value })
@@ -218,12 +225,13 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+              <Label htmlFor="password" className="text-sm font-bold ml-1">Senha</Label>
               <Input
                 id="password"
                 type="password"
                 placeholder="••••••••"
                 required
+                className="h-14 rounded-2xl bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-primary text-base"
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
@@ -231,71 +239,50 @@ export default function RegisterPage() {
               />
             </div>
 
-            <div className="flex items-start gap-3 rounded-md border bg-muted/20 p-3">
+            <div className="flex items-center space-x-3 py-2">
               <input
-                id="acceptedTerms"
                 type="checkbox"
-                className="mt-1 h-4 w-4 cursor-pointer rounded border-gray-300 text-primary focus:ring-primary"
+                id="terms"
+                className="w-5 h-5 rounded-md border-primary text-primary focus:ring-primary accent-primary"
                 checked={formData.acceptedTerms}
                 onChange={(e) =>
                   setFormData({ ...formData, acceptedTerms: e.target.checked })
                 }
-                disabled={loading}
               />
-              <Label
-                htmlFor="acceptedTerms"
-                className="block cursor-pointer text-xs font-normal leading-relaxed text-muted-foreground"
-              >
-                Eu li e aceito os{" "}
-                <Link
-                  href="/termos-de-uso"
-                  target="_blank"
-                  className="font-medium text-primary underline underline-offset-4 hover:opacity-80"
-                >
+              <Label htmlFor="terms" className="text-sm font-medium leading-relaxed">
+                Eu aceito os{" "}
+                <Link href="/termos-de-uso" className="text-primary font-bold hover:underline">
                   Termos de Uso
                 </Link>{" "}
                 e a{" "}
-                <Link
-                  href="/politica-de-privacidade"
-                  target="_blank"
-                  className="font-medium text-primary underline underline-offset-4 hover:opacity-80"
-                >
+                <Link href="/politica-de-privacidade" className="text-primary font-bold hover:underline">
                   Política de Privacidade
                 </Link>
-                .
               </Label>
             </div>
 
             <Button
               type="submit"
-              className="w-full"
-              disabled={loading || !formData.acceptedTerms}
+              className="w-full h-14 rounded-2xl text-lg font-bold shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              disabled={loading}
             >
-              {loading ? "Criando conta..." : "Criar conta"}
+              {loading ? "Criando conta..." : "Criar Minha Conta"}
             </Button>
           </form>
-        </CardContent>
-        <CardFooter className="flex flex-col space-y-4">
-          <div className="text-muted-foreground text-center text-sm">
-            Já possui uma conta?{" "}
+
+          <p className="text-center text-muted-foreground font-medium pt-4">
+            Já tem uma conta?{" "}
             <Link
               href={ensureAbsoluteUrl(
-                process.env.NEXT_PUBLIC_DASHBOARD_URL ||
-                  "http://localhost:3000/admin"
+                process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3000/admin"
               )}
-              className="text-primary font-medium hover:underline"
+              className="text-primary font-bold hover:underline"
             >
-              Fazer login
+              Entrar agora
             </Link>
-          </div>
-          <Link
-            href="/"
-            className="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" /> Voltar para o início
-          </Link>
-        </CardFooter>
-      </Card>
-    </div>
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }
