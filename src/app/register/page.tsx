@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, ArrowLeft, CheckCircle2 } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -174,9 +175,16 @@ export default function RegisterPage() {
       <div className="hidden lg:flex flex-col justify-between w-1/2 p-12 bg-muted/30 border-r border-border/50 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-primary/5 blur-3xl rounded-full" />
         
-        <Link href="/" className="flex items-center gap-2 font-bold text-3xl tracking-tighter relative z-10 group transition-all">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
-            <Sparkles className="h-6 w-6 fill-current" />
+        <Link href="/" className="flex items-center gap-3 font-bold text-3xl tracking-tighter relative z-10 group transition-all">
+          <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform overflow-hidden">
+            <Image
+              src="/Aura-Logo-sem-fundo.png"
+              alt="Logo Aura"
+              width={42}
+              height={42}
+              className="object-contain"
+              priority
+            />
           </div>
           <span className="text-foreground">Aura</span>
         </Link>
@@ -221,9 +229,16 @@ export default function RegisterPage() {
       <div className="flex-1 flex flex-col justify-center items-center p-6 sm:p-12 lg:p-24 overflow-y-auto">
         <div className="w-full max-w-md space-y-8">
           <div className="lg:hidden text-center mb-12">
-            <Link href="/" className="inline-flex items-center gap-2 font-bold text-3xl tracking-tighter">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg">
-                <Sparkles className="h-6 w-6 fill-current" />
+            <Link href="/" className="inline-flex items-center gap-3 font-bold text-3xl tracking-tighter">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg shadow-primary/20 overflow-hidden">
+                <Image
+                  src="/Aura-Logo-sem-fundo.png"
+                  alt="Logo Aura"
+                  width={42}
+                  height={42}
+                  className="object-contain"
+                  priority
+                />
               </div>
               <span className="text-foreground">Aura</span>
             </Link>
