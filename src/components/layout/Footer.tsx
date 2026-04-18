@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Sparkles, Instagram, Facebook, Twitter, Phone, Mail } from "lucide-react";
+import Image from "next/image";
+import { Instagram, Facebook, Twitter, Phone, Mail } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -12,8 +13,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           <div className="md:col-span-5">
             <Link href="/" className="flex items-center gap-2 font-bold text-3xl mb-6 tracking-tighter">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30">
-                <Sparkles className="h-6 w-6 fill-current" />
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg shadow-primary/20 overflow-hidden">
+                <Image
+                  src="/Aura-Logo-sem-fundo.png"
+                  alt="Logo Aura"
+                  width={42}
+                  height={42}
+                  className="object-contain"
+                />
               </div>
               <span className="text-foreground">Aura</span>
             </Link>

@@ -9,8 +9,64 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ensureAbsoluteUrl } from "@/lib/utils";
 
+function getPasswordStrength(password: string) {
+  const checks = {
+    minLength: password.length >= 8,
+    hasLower: /[a-z]/.test(password),
+    hasUpper: /[A-Z]/.test(password),
+    hasNumber: /\d/.test(password),
+    hasSpecial: /[^A-Za-z0-9]/.test(password),
+  };
+
+  const score = Object.values(checks).filter(Boolean).length;
+
+  if (!password) {
+    return {
+      score: 0,
+      label: "Muito fraca",
+      colorClass: "bg-muted",
+      checks,
+    };
+  }
+
+  if (score <= 2) {
+    return {
+      score,
+      label: "Fraca",
+      colorClass: "bg-red-500",
+      checks,
+    };
+  }
+
+  if (score === 3) {
+    return {
+      score,
+      label: "Média",
+      colorClass: "bg-amber-500",
+      checks,
+    };
+  }
+
+  if (score === 4) {
+    return {
+      score,
+      label: "Forte",
+      colorClass: "bg-lime-500",
+      checks,
+    };
+  }
+
+  return {
+    score,
+    label: "Muito forte",
+    colorClass: "bg-emerald-500",
+    checks,
+  };
+}
+
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
+  const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -19,6 +75,9 @@ export default function RegisterPage() {
     password: "",
     acceptedTerms: false,
   });
+  const passwordStrength = getPasswordStrength(formData.password);
+  const isPasswordInvalid = hasTriedSubmit && passwordStrength.score < 3;
+  const isTermsInvalid = hasTriedSubmit && !formData.acceptedTerms;
 
   const generateSlug = (text: string) => {
     return text
@@ -33,11 +92,20 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setHasTriedSubmit(true);
 
     if (!formData.acceptedTerms) {
       toast.error(
         "Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar."
       );
+      return;
+    }
+
+    if (passwordStrength.score < 3) {
+      toast.error("Sua senha está muito fraca.", {
+        description:
+          "Use ao menos 8 caracteres e combine letras maiúsculas, minúsculas, números e símbolos.",
+      });
       return;
     }
 
@@ -231,19 +299,63 @@ export default function RegisterPage() {
                 type="password"
                 placeholder="••••••••"
                 required
-                className="h-14 rounded-2xl bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-primary text-base"
+                className={`h-14 rounded-2xl border-none focus-visible:ring-2 text-base ${
+                  isPasswordInvalid
+                    ? "bg-red-50/40 ring-2 ring-red-500/60 focus-visible:ring-red-500"
+                    : "bg-muted/50 focus-visible:ring-primary"
+                }`}
+                aria-invalid={isPasswordInvalid}
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-muted-foreground">Nível de segurança</span>
+                  <span className="font-semibold text-foreground">{passwordStrength.label}</span>
+                </div>
+                <div className="grid grid-cols-5 gap-1">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className={`h-1.5 rounded-full transition-colors ${
+                        index < passwordStrength.score
+                          ? passwordStrength.colorClass
+                          : "bg-muted"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+                  <li>{passwordStrength.checks.minLength ? "✓" : "•"} 8+ caracteres</li>
+                  <li>{passwordStrength.checks.hasUpper ? "✓" : "•"} Letra maiúscula</li>
+                  <li>{passwordStrength.checks.hasLower ? "✓" : "•"} Letra minúscula</li>
+                  <li>{passwordStrength.checks.hasNumber ? "✓" : "•"} Número</li>
+                  <li>{passwordStrength.checks.hasSpecial ? "✓" : "•"} Caractere especial</li>
+                </ul>
+                {isPasswordInvalid && (
+                  <p className="text-xs font-medium text-red-600">
+                    Sua senha precisa estar pelo menos no nível médio para continuar.
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div className="flex items-center space-x-3 py-2">
+            <div
+              className={`flex items-center space-x-3 rounded-xl border px-3 py-3 transition-colors ${
+                isTermsInvalid
+                  ? "border-red-500/70 bg-red-50/40"
+                  : "border-transparent"
+              }`}
+            >
               <input
                 type="checkbox"
                 id="terms"
-                className="w-5 h-5 rounded-md border-primary text-primary focus:ring-primary accent-primary"
+                className={`w-5 h-5 rounded-md text-primary focus:ring-primary accent-primary ${
+                  isTermsInvalid ? "border-red-500" : "border-primary"
+                }`}
+                aria-invalid={isTermsInvalid}
                 checked={formData.acceptedTerms}
                 onChange={(e) =>
                   setFormData({ ...formData, acceptedTerms: e.target.checked })
@@ -260,6 +372,11 @@ export default function RegisterPage() {
                 </Link>
               </Label>
             </div>
+            {isTermsInvalid && (
+              <p className="-mt-2 text-xs font-medium text-red-600">
+                Você precisa aceitar os Termos de Uso e a Política de Privacidade.
+              </p>
+            )}
 
             <Button
               type="submit"

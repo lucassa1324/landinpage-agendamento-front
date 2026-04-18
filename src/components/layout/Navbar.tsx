@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Calendar, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -23,9 +24,16 @@ export function Navbar() {
     <header className="fixed top-4 left-0 right-0 w-full z-50">
       <div className="container mx-auto px-4">
         <div className="h-16 flex items-center justify-between bg-white/70 backdrop-blur-xl border border-white/20 rounded-full px-6 shadow-lg shadow-black/5">
-          <Link href="/" className="flex items-center gap-2 font-bold text-2xl tracking-tighter group transition-all">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
-              <Sparkles className="h-6 w-6 fill-current" />
+          <Link href="/" className="flex items-center gap-3 font-bold text-2xl tracking-tighter group transition-all">
+            <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform overflow-hidden">
+              <Image
+                src="/Aura-Logo-sem-fundo.png"
+                alt="Logo Aura"
+                width={42}
+                height={42}
+                className="object-contain"
+                priority
+              />
             </div>
             <span className="text-foreground">Aura</span>
           </Link>
