@@ -185,7 +185,7 @@ export default function TutorialsPage() {
           {filteredTutorials.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredTutorials.map((tutorial) => (
-                <Card key={tutorial.slug} className="group overflow-hidden border-primary/10 hover:border-primary/30 transition-all hover:shadow-lg flex flex-col">
+                <Card key={tutorial.slug} className="group overflow-hidden border-primary/10 hover:border-primary/30 transition-all hover:shadow-lg flex flex-col pt-0">
                   <Link href={`/tutorials/${tutorial.slug}`} className="flex flex-col h-full">
                     <div className="relative aspect-video overflow-hidden">
                       <img 
@@ -200,7 +200,7 @@ export default function TutorialsPage() {
                         </Badge>
                       </div>
                     </div>
-                    <CardHeader className="grow">
+                    <CardHeader className="grow my-4">
                       <div className="flex flex-wrap items-center gap-2 text-xs font-medium mb-3">
                         <Badge variant="outline" className="text-[10px] uppercase tracking-wider font-bold">
                           {tutorial.category}

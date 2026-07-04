@@ -32,7 +32,7 @@ export function Hero() {
                   Começar Agora <ArrowRight className="h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="h-14 px-8 text-lg rounded-full border-primary/20 hover:bg-primary/5 transition-all">
+              <Button size="lg" variant="outline" className="h-14 px-8 text-lg rounded-full border-primary/20 hover:bg-primary/5 hover:text-primary transition-all">
                 Ver Demonstração
               </Button>
             </div>

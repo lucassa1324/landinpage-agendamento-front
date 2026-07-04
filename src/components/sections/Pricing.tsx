@@ -74,7 +74,7 @@ export function Pricing() {
       
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold tracking-wider uppercase bg-accent/20 text-accent-foreground rounded-full">
+          <div className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold tracking-wider uppercase bg-accent text-accent-foreground rounded-full">
             Investimento no seu Sucesso
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Planos Simples e Transparentes</h2>
@@ -125,7 +125,7 @@ export function Pricing() {
                   size="lg" 
                   variant={tier.popular ? "default" : "outline"}
                   className={`w-full h-14 rounded-full text-lg font-bold shadow-lg transition-all ${
-                    tier.popular ? 'shadow-primary/30' : 'hover:bg-primary/5 border-primary/20'
+                    tier.popular ? 'shadow-primary/30' : 'hover:bg-primary/5 hover:text-primary border-primary/20'
                   }`}
                 >
                   <Link href={tier.href}>{tier.buttonText}</Link>

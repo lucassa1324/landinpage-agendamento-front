@@ -13,6 +13,7 @@ import {
   Cinzel,
 } from "next/font/google";
 import "./globals.css";
+import "@/styles/themes/aura.css";
 import { Toaster } from "sonner";
 
 const poppins = Poppins({
