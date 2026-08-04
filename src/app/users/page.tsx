@@ -23,6 +23,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ensureAbsoluteUrl } from "@/lib/utils";
 
+const API_BASE_URL = ensureAbsoluteUrl(
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
+);
+
 interface User {
   id: string;
   name: string;
@@ -44,8 +48,8 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      // Usando caminho relativo para passar pelo Proxy (Next.js rewrites) e evitar CORS
-      const targetUrl = "/api/users";
+      // Requisição direta ao backend (sem proxy)
+      const targetUrl = `${API_BASE_URL}/api/users`;
 
       console.log("🛠️ Buscando usuários via Proxy em:", targetUrl);
       

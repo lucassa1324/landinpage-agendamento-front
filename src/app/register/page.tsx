@@ -10,6 +10,10 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ensureAbsoluteUrl } from "@/lib/utils";
 
+const API_BASE_URL = ensureAbsoluteUrl(
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
+);
+
 function getPasswordStrength(password: string) {
   const checks = {
     minLength: password.length >= 8,
@@ -126,7 +130,7 @@ export default function RegisterPage() {
     };
 
     try {
-      const targetUrl = "/api/users/";
+      const targetUrl = `${API_BASE_URL}/api/users/`;
       const response = await fetch(targetUrl, {
         method: "POST",
         headers: {

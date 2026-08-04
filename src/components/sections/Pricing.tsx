@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { PRICING_CONFIG } from "@/config/pricing";
+import { ensureAbsoluteUrl } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 export function Pricing() {
@@ -15,7 +16,9 @@ export function Pricing() {
       try {
         // Tenta buscar o preço dinâmico do backend
         // Usamos a URL absoluta do backend já que a landing page está em porta diferente
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+        const apiUrl = ensureAbsoluteUrl(
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
+        );
         const response = await fetch(`${apiUrl}/api/business/settings/pricing?t=${Date.now()}`);
         if (response.ok) {
           const data = await response.json();
